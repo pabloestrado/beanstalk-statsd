@@ -92,14 +92,11 @@ func TubesStats() (stats map[string]map[string]int, err error) {
 		if err != nil {
 			return stats, fmt.Errorf("Failed to get stats for tube %s: %s", tubeName, err)
 		}
-		stats[tubeName] = map[string]int{
-			"buried":   mustInt(data["current-jobs-buried"]),
-			"ready":    mustInt(data["current-jobs-ready"]),
-			"delayed":  mustInt(data["current-jobs-delayed"]),
-			"reserver": mustInt(data["current-jobs-reserved"]),
-			"urgent":   mustInt(data["current-jobs-urgent"]),
-			"waiting":  mustInt(data["current-waiting"]),
-			"total":    mustInt(data["total-jobs"]),
+		stats[tubeName] = make(map[string]int)
+		for  k, v := range data {
+			if vi, err := strconv.Atoi(v); err == nil {
+ 			   stats[tubeName][k] = int(vi)
+			}			
 		}
 	}
 	return stats, nil
