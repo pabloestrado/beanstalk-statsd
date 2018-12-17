@@ -95,10 +95,22 @@ func TubesStats() (stats map[string]map[string]int, err error) {
 		stats[tubeName] = make(map[string]int)
 		for  k, v := range data {
 			if vi, err := strconv.Atoi(v); err == nil {
- 			   stats[tubeName][k] = int(vi)
+ 				stats[tubeName][k] = vi
 			}			
 		}
 	}
+	// Global stats	
+	stats["_global"] = make(map[string]int)
+	globalStats, err := conn.Stats()
+	if err == nil {
+		for metric, value := range globalStats {
+			if vi, err := strconv.Atoi(value); err == nil {
+				stats["_global"][metric] = vi
+			}	
+		}
+	}
+
+
 	return stats, nil
 }
 

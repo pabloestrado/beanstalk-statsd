@@ -2,8 +2,12 @@
 
 Send [beanstalk](http://kr.github.io/beanstalkd/) stats to [StatsD](https://github.com/etsy/statsd)
 
-    $ beanstalk-statsd -h
-    Usage of beanstalk-statsd:
+This is a fork of [beanstalk-statsd](https://github.com/RealGeeks/beanstalk-statsd)
+
+Main advantage of this project in compare with original one that *all* numeric metrics (string metrics will be skiped) from beanstalk should be send to statsd, including the global system metrics, they will be send to statsd with tube name "_global"
+
+## Usage of beanstalk-statsd:
+./beanstalk-statsd
     -beanstalkd="127.0.0.1:11300": Beanstalkd address
     -period=1s: How often to send stats. Ex.: 1s (second), 2m (minutes), 400ms (milliseconds)
     -prefix="beanstalk": StatsD prefix for all stats
@@ -14,15 +18,4 @@ Send [beanstalk](http://kr.github.io/beanstalkd/) stats to [StatsD](https://gith
 
 ## Install
 
-Just download [one of our binaries](dist)
-
-## Running in docker
-
-```docker run -e BEANSTALK_HOST=foo BEANSTALK_PORT=1234 STATSD_HOST=whatever realgeeks/beanstalk-statsd```
-
-## Development
-
-First update the `Version` constant then build the binaries with
-[goxc](https://github.com/laher/goxc#installation)
-
-    make
+Build it with ```go build```` Tested with Go 1.10
